@@ -1,4 +1,4 @@
-package org.dist.tracing.controller;
+package org.dist.tracing.contoller;
 
 import org.dist.tracing.services.EmployeeService;
 import org.slf4j.Logger;

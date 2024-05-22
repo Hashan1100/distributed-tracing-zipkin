@@ -4,11 +4,13 @@ import org.dist.tracing.services.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/employee")
+@RestController
+@RequestMapping("/employee")
 public class EmployeeController {
     private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
@@ -33,7 +35,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/send-notification")
-    public String sendNotification() throws InterruptedException {
+    public String sendNotification() {
         logger.info("Sending notification");
         employeeService.sendNotification();
         logger.info("Async notification scheduled");

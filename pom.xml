@@ -56,7 +56,7 @@
 	</dependencyManagement>
 
 	<build>
-		<plugins>
+		<plugins>private static final
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

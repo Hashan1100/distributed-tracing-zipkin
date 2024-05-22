@@ -2,6 +2,7 @@ package org.dist.tracing.services;
 
 import brave.Span;
 import brave.Tracer;
+import org.dist.tracing.connectors.ApiConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -14,10 +15,11 @@ public class EmployeeService {
     private final Tracer tracer;
     private final Executor executor;
     private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
-
-    public EmployeeService(Tracer tracer, Executor executor) {
+    private final ApiConnector apiConnector;
+    public EmployeeService(Tracer tracer, Executor executor, ApiConnector apiConnector) {
         this.tracer = tracer;
         this.executor = executor;
+        this.apiConnector = apiConnector;
     }
 
     public void getEmployee() throws InterruptedException {
@@ -49,9 +51,9 @@ public class EmployeeService {
 
 
     @Async
-    public void sendNotification() throws InterruptedException {
+    public void sendNotification() {
         logger.info("Sending async notification");
-        Thread.sleep(1000L);
+        apiConnector.sendRequest();
         logger.info("Sending async notification sent");
     }
 }

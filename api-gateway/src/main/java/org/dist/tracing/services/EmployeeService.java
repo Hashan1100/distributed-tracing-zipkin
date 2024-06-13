@@ -5,6 +5,7 @@ import brave.Tracer;
 import org.dist.tracing.connectors.ApiConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class EmployeeService {
     private final Executor executor;
     private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
     private final ApiConnector apiConnector;
-    public EmployeeService(Tracer tracer, Executor executor, ApiConnector apiConnector) {
+    public EmployeeService(Tracer tracer,@Qualifier("virtualThreadPool") Executor executor, ApiConnector apiConnector) {
         this.tracer = tracer;
         this.executor = executor;
         this.apiConnector = apiConnector;

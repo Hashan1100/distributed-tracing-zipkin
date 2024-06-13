@@ -9,3 +9,4 @@ For further reference, please consider the following sections:
 * [Distributed Tracing Reference Guide](https://micrometer.io/docs/tracing)
 * [Getting Started with Distributed Tracing](https://docs.spring.io/spring-boot/docs/3.2.4/reference/html/actuator.html#actuator.micrometer-tracing.getting-started)
 
+https://medium.com/javarevisited/tracing-in-spring-boot3-097205dc08f4

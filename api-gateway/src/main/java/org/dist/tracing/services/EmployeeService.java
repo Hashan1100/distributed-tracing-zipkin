@@ -1,7 +1,8 @@
 package org.dist.tracing.services;
 
-import brave.Span;
-import brave.Tracer;
+
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import org.dist.tracing.connectors.ApiConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class EmployeeService {
     private final Executor executor;
     private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
     private final ApiConnector apiConnector;
-    public EmployeeService(Tracer tracer,@Qualifier("virtualThreadPool") Executor executor, ApiConnector apiConnector) {
+    public EmployeeService(Tracer tracer, @Qualifier("asyncExecutorPool1") Executor executor, ApiConnector apiConnector) {
         this.tracer = tracer;
         this.executor = executor;
         this.apiConnector = apiConnector;
@@ -27,11 +28,11 @@ public class EmployeeService {
         logger.info("Get employee service");
         Span getEmployeeService = tracer.nextSpan().name("GetEmployeeService").start();
         logger.info("Applying tracer");
-        try(Tracer.SpanInScope spanInScope = tracer.withSpanInScope(getEmployeeService.start())) {
+        try(Tracer.SpanInScope spanInScope = tracer.withSpan(getEmployeeService.start())) {
             Thread.sleep(1000L);
             logger.info("Running with a new span");
         } finally {
-            getEmployeeService.finish();
+            getEmployeeService.end();
         }
         logger.info("Running with older span");
     }
@@ -54,7 +55,7 @@ public class EmployeeService {
     @Async
     public void sendNotification() {
         logger.info("Sending async notification");
-        apiConnector.sendRequest();
+        apiConnector.sendRequest("Subject 1", "Message 1");
         logger.info("Sending async notification sent");
     }
 }

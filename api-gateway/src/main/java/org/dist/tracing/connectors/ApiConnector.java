@@ -1,5 +1,6 @@
 package org.dist.tracing.connectors;
 
+import org.dist.tracing.connectors.dto.NotificationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,10 +15,12 @@ public class ApiConnector {
         this.restClient = restClient;
     }
 
-    public void sendRequest() {
+    public void sendRequest(String subject, String message) {
+        NotificationRequest notificationRequest = new NotificationRequest(message, subject);
         String body = restClient
-            .get()
-            .uri("/notification/")
+            .post()
+            .uri("/notification")
+            .body(notificationRequest)
             .retrieve()
             .body(String.class);
         logger.info("Response returned {}", body);
